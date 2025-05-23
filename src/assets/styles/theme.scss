@@ -1,0 +1,74 @@
+/* incluir toda la libreria de material : */
+
+@use '@angular/material' as mat;
+
+/* Flag permite multiples themas : */
+
+mat.$theme-ignore-duplication-warnings: true;
+
+/* funcion para que todos los componentes detecten los cambios de thema:*/
+
+@include mat.core();
+
+/* funciones definición de thema : */
+
+$dark-theme:mat.define-theme(
+    (
+    color: (
+        theme-type:dark,
+        primary: mat.$violet-palette,
+    ),
+    density: (
+        scale: -2,
+    )
+));
+
+$light-theme:mat.define-theme(
+    (
+    color: (
+        theme-type:light,
+        primary: mat.$blue-palette,
+    ),
+    density: (
+        scale: -2,
+    )
+));
+
+/* asignar al HTML los nuevos estilos modificados colors  :*/
+
+html {
+    @include mat.all-component-themes($dark-theme);
+
+    &.light-theme {
+         @include mat.all-component-themes($light-theme);
+    }
+
+    @media (prefers-color-scheme: light) {
+        @include mat.all-component-themes($light-theme);
+    }
+}
+
+body {
+    &.dark-theme {
+        background-color: #333;
+    }
+    &.ligth-theme {
+        background-color: #FFF;
+    }
+}
+
+.dark-theme {
+    @include mat.all-component-themes($dark-theme);
+
+    .example-label {
+        color:white;
+    }
+}
+
+.ligth-theme {
+    @include mat.all-component-themes($light-theme);
+
+      .example-label {
+        color:black;
+    }
+}
